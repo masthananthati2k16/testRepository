@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="bef6e92c-b60c-4fd6-a60b-215a2c5e8d5d" >
+		<http:listener-connection host="0.0.0.0" port="2020" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="043799b1-7703-4f3a-bbd9-25540f3feb16" >
+		<db:my-sql-connection host="127.0.0.1" port="3306" user="masthansqldb" password="Masthan@123" database="masthan_db" />
+	</db:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="6f6a8ba8-6210-4f9d-900b-bb96d24eaae4" />
+	<db:config name="Database_Config1" doc:name="Database Config" doc:id="c91264d7-f5c7-4c88-a23d-1fbeed8c3593" >
+		<db:my-sql-connection host="127.0.0.1" port="3306" user="masthansqldb" password="Masthan@123" database="masthan_db" />
+	</db:config>
+	<flow name="connect-to-database-pocFlow" doc:id="f8b21d52-4e31-4df0-9f86-352f3b87cd7b" >
+		<http:listener doc:name="Listener" doc:id="8ecf057e-84f2-4130-a59e-02d465974086" config-ref="HTTP_Listener_config" path="/mysql/db/"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e6a7d92d-2742-46af-9d77-55c47a7f1b23" message="Flow gets started for connect to my sql database...."/>
+		<db:select doc:name="Select" doc:id="fdcc2839-fe53-40ae-803c-4ae19e6313a6" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from employee]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="70ac69b0-10b7-4dcb-ab11-689f4c193d89" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:read doc:name="Read" doc:id="cbeda978-d599-43b2-ab68-dc72dc135a57" path="C:\Users\Hema\Downloads\Learning\Mule\DatabaseDetails\InputFiles"/>
+		<ee:transform doc:name="Transform Message" doc:id="3dd4f2d0-39b2-4fff-801a-8c97b31592e7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:bulk-insert doc:name="Bulk insert" doc:id="87a9cd21-9523-4ac6-b199-61be006b36ef" config-ref="Database_Config">
+			<db:sql ><![CDATA[INSERT INTO employee (emp_id, emp_name,designation,salary) 
+VALUES (:emp_id, :emp_name,:designation,:salary)]]></db:sql>
+		</db:bulk-insert>
+		<logger level="INFO" doc:name="Logger" doc:id="a35a25b5-cf37-4c38-8362-aedb6fbef62f" message="Payload after inserted the csv file  data into  SQL database.....#[payload]"/>
+</flow>
+</mule>
