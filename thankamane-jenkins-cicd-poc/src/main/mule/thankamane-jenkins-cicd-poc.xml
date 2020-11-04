@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="dae4d2e4-60f5-4654-83a7-7181bb81bc0f" >
+		<http:listener-connection host="0.0.0.0" port="2026" />
+	</http:listener-config>
+	<flow name="thankamane-jenkins-cicd-pocFlow" doc:id="e7efd605-b93d-4d70-86bd-ff62595f1f9c" >
+		<http:listener doc:name="Listener" doc:id="090b0a83-bfd1-454d-85a7-2f99dee852bf" config-ref="HTTP_Listener_config" path="/jenkins/ci-cd/"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e083d1f1-250e-4ae6-87f6-5d1bef7d36e7" message="##########################Flow gets started successfully#########################"/>
+		<set-payload value="#['Project automation process completed successfully....']" doc:name="Set Payload" doc:id="addc88bc-1568-4538-9fa4-1893ae90217a" />
+		<logger level="INFO" doc:name="Logger" doc:id="20a2f499-4dc7-4fa8-8fbf-097c609b9e3a" message="#[payload]"/>
+	</flow>
+</mule>
