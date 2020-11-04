@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="anothertestFlow" doc:id="3fdab5ab-f847-4716-b2c2-77452aaaf250" >
+		<http:listener doc:name="Listener" doc:id="f9b4d8b3-a65e-4e9f-a57d-df44948958b6" config-ref="HTTP_Listener_config" path="/another/test/"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7269642d-c005-4d30-966c-cced907e273e" message=":::::::::::::::::::::::::::::::::::::::::Another flow gest started successfully::::::::::::::::::::::::::::::: "/>
+	</flow>
+</mule>
