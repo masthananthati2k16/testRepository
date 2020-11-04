@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="testanotherpocFlow" doc:id="18ebec00-8b0f-44b8-96b9-e7c5a28115fd" >
+		<http:listener doc:name="Listener" doc:id="872b4216-44bb-4e15-8a4e-a040895ce0ae" config-ref="HTTP_Listener_config" path="/test/another/poc/"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9532f624-d558-4355-a511-764d3f005efc" message="Test another POC gets started successfully::::::::::::::::::::::::::"/>
+	</flow>
+</mule>
